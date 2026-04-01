@@ -1,16 +1,17 @@
-import { FormEvent, useState } from "react";
-import "./App.css";
-import useSearchProducts from "./feature/product/useSearchProducts";
-import { ChangeEvent } from "react";
-import useDebouncedValue from "./hooks/useDebouncedValue";
-import SuggestionList from "./feature/product/SuggestionList";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { searchProducts } from "./api/products";
+import RecentQueryList from "./feature/product/RecentQueryList";
+import SuggestionList from "./feature/product/SuggestionList";
+import useSearchProducts from "./feature/product/useSearchProducts";
+import useDebouncedValue from "./hooks/useDebouncedValue";
 
-// TODO: API import
-// import { searchProducts, Product } from './api/products';
+import "./App.css";
 
 function App() {
   const [query, setQuery] = useState("");
+  const [recentQueries, setRecentQueries] = useState<string[] | undefined>(
+    undefined,
+  );
   const debouncedValue = useDebouncedValue({ value: query });
   const { data: products, isLoading } = useSearchProducts(debouncedValue);
 
@@ -29,12 +30,12 @@ function App() {
     const parsedData = storageData ? (JSON.parse(storageData) as string[]) : [];
 
     parsedData.push(query);
-    parsedData.slice(-5);
-
-    const stringifiedData = JSON.stringify(parsedData);
+    const newParsedData = parsedData.slice(-5);
+    const stringifiedData = JSON.stringify(newParsedData);
     localStorage.setItem(recentQueriesKey, stringifiedData);
 
     console.log(data);
+    setRecentQueries(newParsedData);
   };
 
   return (
@@ -62,6 +63,7 @@ function App() {
       ) : null}
 
       {/* TODO: 최근 검색어 구현 */}
+      <RecentQueryList recentQueries={recentQueries} />
     </div>
   );
 }
