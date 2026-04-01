@@ -1,11 +1,22 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import useSearchProducts from "./feature/product/useSearchProducts";
+import { ChangeEvent } from "react";
+import useDebouncedValue from "./hooks/useDebouncedValue";
+import ProductList from "./feature/product/ProductList";
 
 // TODO: API import
 // import { searchProducts, Product } from './api/products';
 
 function App() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
+  const debouncedValue = useDebouncedValue({ value: query });
+  const { data: products, isLoading } = useSearchProducts(debouncedValue);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setQuery(value);
+  };
 
   return (
     <div className="app">
@@ -15,7 +26,7 @@ function App() {
         <input
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={handleChange}
           placeholder="상품을 검색하세요"
           className="search-input"
         />
@@ -23,6 +34,12 @@ function App() {
       </div>
 
       {/* TODO: 자동완성 목록 구현 */}
+      {isLoading ? (
+        <div>로딩 중...</div>
+      ) : (
+        <ProductList products={products ?? []} />
+      )}
+
       {/* TODO: 최근 검색어 구현 */}
     </div>
   );
