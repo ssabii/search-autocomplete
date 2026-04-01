@@ -24,6 +24,16 @@ function App() {
 
     const data = await searchProducts(query);
 
+    const recentQueriesKey = "recentQueries";
+    const storageData = localStorage.getItem(recentQueriesKey);
+    const parsedData = storageData ? (JSON.parse(storageData) as string[]) : [];
+
+    parsedData.push(query);
+    parsedData.slice(-5);
+
+    const stringifiedData = JSON.stringify(parsedData);
+    localStorage.setItem(recentQueriesKey, stringifiedData);
+
     console.log(data);
   };
 
