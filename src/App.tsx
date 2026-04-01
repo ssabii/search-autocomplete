@@ -47,9 +47,9 @@ function App() {
       {/* TODO: 자동완성 목록 구현 */}
       {isLoading ? (
         <div>로딩 중...</div>
-      ) : (
+      ) : products ? (
         <SuggestionList products={products ?? []} />
-      )}
+      ) : null}
 
       {/* TODO: 최근 검색어 구현 */}
     </div>

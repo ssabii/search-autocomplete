@@ -5,6 +5,10 @@ interface SuggestionListProps {
 }
 
 function SuggestionList({ products }: SuggestionListProps) {
+  if (products.length === 0) {
+    return <div>검색 결과 없음</div>;
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
       {products.map((item) => (

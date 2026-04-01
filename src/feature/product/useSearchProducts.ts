@@ -7,6 +7,7 @@ function useSearchProducts(query?: string) {
 
   useEffect(() => {
     if (!query) {
+      setData(undefined);
       return;
     }
 
