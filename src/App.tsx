@@ -3,7 +3,7 @@ import "./App.css";
 import useSearchProducts from "./feature/product/useSearchProducts";
 import { ChangeEvent } from "react";
 import useDebouncedValue from "./hooks/useDebouncedValue";
-import ProductList from "./feature/product/ProductList";
+import SuggestionList from "./feature/product/SuggestionList";
 
 // TODO: API import
 // import { searchProducts, Product } from './api/products';
@@ -37,7 +37,7 @@ function App() {
       {isLoading ? (
         <div>로딩 중...</div>
       ) : (
-        <ProductList products={products ?? []} />
+        <SuggestionList products={products ?? []} />
       )}
 
       {/* TODO: 최근 검색어 구현 */}

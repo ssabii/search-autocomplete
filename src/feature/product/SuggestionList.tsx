@@ -1,10 +1,10 @@
 import { Product } from "../../api/products";
 
-interface ProductListProps {
+interface SuggestionListProps {
   products: Product[];
 }
 
-function ProductList({ products }: ProductListProps) {
+function SuggestionList({ products }: SuggestionListProps) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
       {products.map((item) => (
@@ -20,4 +20,4 @@ function ProductList({ products }: ProductListProps) {
   );
 }
 
-export default ProductList;
+export default SuggestionList;
